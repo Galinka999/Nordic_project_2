@@ -55,6 +55,7 @@
     <div class="wrapper">
         <div id="map" style="width: 1200px; height: 500px; margin: 80px 0;"></div>
         Данные, которые были введены во второй версии файла
+        Строка текста, созданная в третьей версии
     </div>
 </body>
 
