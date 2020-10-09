@@ -54,7 +54,6 @@
 <body>
     <div class="wrapper">
         <div id="map" style="width: 1200px; height: 500px; margin: 80px 0;"></div>
-        4 строка для 4 коммита
     </div>
 </body>
 
