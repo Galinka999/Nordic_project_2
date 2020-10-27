@@ -60,7 +60,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/eshop/components/header/index.php');
                 <?php if ( $arr ) {
                     echo array_sum($arr) . " руб.";
                 } elseif (isset($_SESSION['basket'])) {
-                    // echo count($_SESSION['basket']);
                     echo array_sum($value_arr) . " руб.";
                 } ?>
             </div>
@@ -74,56 +73,58 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/eshop/components/header/index.php');
         <img src="/eshop/img/icons/zigzag.png">
     </div>
 
-    <div class="delivery">
-        <h1>АДРЕС ДОСТАВКИ</h1>
-        <p class="text lobster">Все поля обязательны для заполнения</p>
+    <div>
         <form  action="system/controllers/orders/create.php" method="get">
-            <div class="form-delivery">
-                <select name="delivery_method" required >
-                    <option hidden>ВЫБЕРИТЕ ВАРИАНТ ДОСТАВКИ:</option>
-                        <optgroup label="Для регионов">
-                            <option value="post">Почта России</option>
-                            <option value="express">Express доставка</option>
-                        </optgroup>
-                        <optgroup label="Для Москвы">
-                            <option value="curier" selected>Курьерская служба - 500 руб.</option>
-                        </optgroup>
-                </select>
-                <div class="delivery-item flex-box">
-                    <label>
-                        Имя 
-                        <input required type="text" name="first_name" />
-                    </label>
-                    <label>
-                        Фамилия
-                        <input required type="text" name="first_surname" />
-                    </label>
-                </div>
-                <div class="delivery-address">
-                    <label>
-                        Адрес
-                        <input required type="text" name="address" />
-                    </label>
-                </div>
-                <div class="delivery-item flex-box">
-                    <label>
-                        Город
-                        <input required type="text" name="city" />
-                    </label>
-                    <label>
-                        Индекс
-                        <input required type="text" name="address_index" />
-                    </label>
-                </div>
-                <div class="delivery-item flex-box">
-                    <label>
-                        Телефон
-                        <input required type="phone" name="phone" />
-                    </label>
-                    <label>
-                        E-mail
-                        <input required type="email" name="email" />
-                    </label>
+            <div class="delivery">
+                <h1>АДРЕС ДОСТАВКИ</h1>
+                <p class="text lobster">Все поля обязательны для заполнения</p>
+                <div class="form-delivery">
+                    <select name="delivery_method" required >
+                        <option hidden>ВЫБЕРИТЕ ВАРИАНТ ДОСТАВКИ:</option>
+                            <optgroup label="Для регионов">
+                                <option value="post">Почта России</option>
+                                <option value="express">Express доставка</option>
+                            </optgroup>
+                            <optgroup label="Для Москвы">
+                                <option value="curier" selected>Курьерская служба - 500 руб.</option>
+                            </optgroup>
+                    </select>
+                    <div class="delivery-item flex-box">
+                        <label>
+                            Имя 
+                            <input required type="text" name="first_name" />
+                        </label>
+                        <label>
+                            Фамилия
+                            <input required type="text" name="first_surname" />
+                        </label>
+                    </div>
+                    <div class="delivery-address">
+                        <label>
+                            Адрес
+                            <input required type="text" name="address" />
+                        </label>
+                    </div>
+                    <div class="delivery-item flex-box">
+                        <label>
+                            Город
+                            <input required type="text" name="city" />
+                        </label>
+                        <label>
+                            Индекс
+                            <input required type="text" name="address_index" />
+                        </label>
+                    </div>
+                    <div class="delivery-item flex-box">
+                        <label>
+                            Телефон
+                            <input required type="phone" name="phone" />
+                        </label>
+                        <label>
+                            E-mail
+                            <input required type="email" name="email" />
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="separation">
@@ -136,10 +137,12 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/eshop/components/header/index.php');
                     <div class="is-bold">
                         Стоимость:     
                     </div>
-                    <div class="payment-text-price">
+                    <div id="basket-total" class="payment-text-price" >
                         <?php if ( $arr ) {
                             echo array_sum($arr) . " руб.";
-                        }?>
+                        } elseif (isset($_SESSION['basket'])) {
+                            echo array_sum($value_arr) . " руб.";
+                        } ?>
                     </div>
                 </div>
                 <div class="payment-text flex-box">
@@ -152,12 +155,22 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/eshop/components/header/index.php');
                     <div class="is-bold">
                         Итого:
                     </div>
-                    <div class="payment-text-price">
+                    <div id="basket-total-delivery" class="payment-text-price">
                         <?php if ( $arr ) {
                             $sum = array_sum($arr) + 500;
                             echo $sum . " руб.";
+                        } elseif (isset($_SESSION['basket'])) {
+                            echo array_sum($value_arr);
                         }?>
                     </div>
+                </div>
+                <div class="form-delivery">
+                    <select required >
+                        <option hidden>ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ:</option>
+                            <option value="card" selected>Банковская карта</option>
+                            <option value="express">Электронный кошелек</option>
+                            <option value="curier" >Счет на оплату</option>
+                    </select>
                 </div>
                 <button class="btn-clear-basket is-bold" >
                     Заказать
@@ -165,13 +178,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/eshop/components/header/index.php');
             </div>
         </form>
     </div>
-    
-    
-        
+          
 
     <? } else { ?>
         <div class="clear-basket is-bold">
-            <h2>Ваша корзина пуста</h2>
+            <h2 >Ваша корзина пуста</h2>
         </div>
     <? } ?>
         
